@@ -56,8 +56,11 @@ namespace FromJson
 
                 try
                 {
-                    using JsonDocument document = JsonDocument.Parse(bodyText);
-                    jsonRoot = document.RootElement.Clone();
+                    using (JsonDocument document = JsonDocument.Parse(bodyText))
+                    {
+
+                        jsonRoot = document.RootElement.Clone();
+                    }
                     bindingContext.HttpContext.Items[ITEM_CACHAE_KEY] = jsonRoot;
                 }
                 catch (JsonException ex)
@@ -106,7 +109,7 @@ namespace FromJson
             }
             else
             {
-                bool isSuccess = jsonRoot.TryGetProperty(fieldName,ignoreCase, out JsonElement jsonProperty);
+                bool isSuccess = jsonRoot.TryGetProperty(fieldName, ignoreCase, out JsonElement jsonProperty);
                 if (isSuccess)
                 {
                     jsonValue = jsonProperty.GetValue(type);
@@ -121,13 +124,13 @@ namespace FromJson
 
         private async Task<string> getBodyAsync(HttpRequest request, Encoding encoding)
         {
-            using var ms = new MemoryStream();
-            request.EnableBuffering();
-            await request.Body.CopyToAsync(ms);
-            request.Body.Position = 0;
-
-            return encoding.GetString(ms.ToArray());
-
+            using (var ms = new MemoryStream())
+            {
+                request.EnableBuffering();
+                await request.Body.CopyToAsync(ms);
+                request.Body.Position = 0;
+                return encoding.GetString(ms.ToArray());
+            }
 
         }
         private FromJsonAttribute getFromJsonAttr(ModelBindingContext bindingContext, string fieldName)

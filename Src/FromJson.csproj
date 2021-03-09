@@ -1,14 +1,23 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageProjectUrl>https://github.com/BigPete-King/FromJson</PackageProjectUrl>
     <RepositoryUrl>https://github.com/BigPete-King/FromJson</RepositoryUrl>
+    <Authors>Pete-King,CLKCLK</Authors>
+    <Company>eTierSoft</Company>
+    <Version>1.0.0.1</Version>
+    <PackageId>FromJson</PackageId>
+    <Description>A Library For ASP.Net Core MVC and ASP.Net Core WebAPI,Binding Parameter of Action From Json Data.</Description>
+    <Product>FromJson.Net</Product>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
+    <PackageReference Include="System.Text.Json" Version="5.0.1" />
   </ItemGroup>
 
   <ItemGroup>
