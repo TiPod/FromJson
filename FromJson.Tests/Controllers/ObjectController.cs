@@ -13,10 +13,11 @@ namespace FromJson.Tests.Controllers
 
         public bool CheckObj([FromJson]TestModel model)
         {
-            if (string.IsNullOrEmpty(model.Text))
+            if (string.IsNullOrEmpty(model.Text) || string.IsNullOrEmpty(model.Detail.Name))
             {
                 return false;
             }
+
             return true;
         }
 

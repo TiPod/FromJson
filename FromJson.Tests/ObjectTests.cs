@@ -2,13 +2,10 @@
 using FromJson.Tests.Controllers;
 using FromJson.Tests.Models;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace FromJson.Tests
 {
-    public class ObjectTests:Server
+    public class ObjectTests : Server
     {
         string ControllerName = "Object";
 
@@ -16,8 +13,13 @@ namespace FromJson.Tests
         public void ObjectInArgument()
         {
             var server = GetTestServer();
-            var model = new TestModel() { 
-            Text ="bbbb"
+            var model = new TestModel()
+            {
+                Text = "bbbb",
+                Detail = new SecondModel()
+                {
+                    Name = "Name!"
+                }
             };
             using (var client = server.CreateClient())
             {
@@ -25,7 +27,7 @@ namespace FromJson.Tests
                 {
                     model = model
                 })).Result;
-                Assert.AreEqual(true,bool.Parse(res.Content.ReadAsStringAsync().Result));
+                Assert.AreEqual(true, bool.Parse(res.Content.ReadAsStringAsync().Result));
             }
             Assert.Pass();
         }
