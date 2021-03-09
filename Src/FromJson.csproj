@@ -7,7 +7,7 @@
     <RepositoryUrl>https://github.com/BigPete-King/FromJson</RepositoryUrl>
     <Authors>Pete-King,CLKCLK</Authors>
     <Company>eTierSoft</Company>
-    <Version>1.0.0</Version>
+    <Version>1.0.0.1</Version>
     <PackageId>FromJson</PackageId>
     <Description>A Library For ASP.Net Core MVC and ASP.Net Core WebAPI,Binding Parameter of Action From Json Data.</Description>
     <Product>FromJson.Net</Product>
