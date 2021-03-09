@@ -41,41 +41,35 @@ namespace Microsoft.AspNetCore.Mvc
 
             var httpContext = bindingContext.HttpContext;
             // 不是有效的格式
-
-            var contentTypeStr = httpContext.Request.ContentType;
-            if (string.Compare(contentTypeStr, "application/json", true) != 0)
+            ContentType contentType = new ContentType(httpContext.Request.ContentType);
+            if (string.Compare(contentType.MediaType, "application/json", true) != 0)
             {
                 throw new ApplicationException("ContentType of request should be application/json");
             }
-
-            //设置编码
-            ContentType contentType = new ContentType(contentTypeStr);
-            var charSet = contentType.CharSet;
-            Encoding encoding;
-            if (string.IsNullOrWhiteSpace(charSet))
-            {
-                encoding = Encoding.UTF8;
-            }
-            else
-            {
-                encoding = Encoding.GetEncoding(charSet);
-            }
-
-            //获取Body内容
-            var bodyText = await getBodyAsync(httpContext.Request, encoding);
-
-            if (string.IsNullOrWhiteSpace(bodyText))
-            {
-                return;
-            }
-
-
             // 取数据
             JsonElement jsonRoot;
             var itemValue = bindingContext.HttpContext.Items[ITEM_CACHAE_KEY];
             if (itemValue == null)
             {
+                //设置编码
+                var charSet = contentType.CharSet;
+                Encoding encoding;
+                if (string.IsNullOrWhiteSpace(charSet))
+                {
+                    encoding = Encoding.UTF8;
+                }
+                else
+                {
+                    encoding = Encoding.GetEncoding(charSet);
+                }
 
+                //获取Body内容
+                var bodyText = await getBodyAsync(httpContext.Request, encoding);
+
+                if (string.IsNullOrWhiteSpace(bodyText))
+                {
+                    return;
+                }
 
                 try
                 {
@@ -83,9 +77,9 @@ namespace Microsoft.AspNetCore.Mvc
                     jsonRoot = document.RootElement.Clone();
                     bindingContext.HttpContext.Items[ITEM_CACHAE_KEY] = jsonRoot;
                 }
-                catch (JsonException)
+                catch (JsonException ex)
                 {
-                    throw new ApplicationException("Parsing json failed:" + bodyText);
+                    throw new ApplicationException($"Parsing JSON Failed:{ex.Message}");
                 }
             }
             else
@@ -101,7 +95,7 @@ namespace Microsoft.AspNetCore.Mvc
             {
                 fieldName = fromJsonAttr.PropertyName;
             }
-            if (ParseJsonValue(jsonRoot, fieldName, bindingContext.ModelType, out object jsonValue))
+            if (parseJsonValue(jsonRoot, fieldName, bindingContext.ModelType, out object jsonValue))
             {
                 bindingContext.Result = ModelBindingResult.Success(jsonValue);
             }
@@ -111,16 +105,16 @@ namespace Microsoft.AspNetCore.Mvc
             }
         }
 
-        private static bool ParseJsonValue(JsonElement jsonObj, string fieldName, Type type, out object jsonValue)
+        private bool parseJsonValue(JsonElement jsonRoot, string fieldName, Type type, out object jsonValue)
         {
             int firstDotIndex = fieldName.IndexOf('.');
             if (firstDotIndex >= 0)
             {
                 string firstPropName = fieldName.Substring(0, firstDotIndex);
                 string rest = fieldName.Substring(firstDotIndex + 1);
-                if (jsonObj.TryGetProperty(firstPropName, out JsonElement firstElement))
+                if (jsonRoot.TryGetProperty(firstPropName, out JsonElement firstElement))
                 {
-                    return ParseJsonValue(firstElement, rest, type, out jsonValue);
+                    return parseJsonValue(firstElement, rest, type, out jsonValue);
                 }
                 else
                 {
@@ -130,7 +124,7 @@ namespace Microsoft.AspNetCore.Mvc
             }
             else
             {
-                bool isSuccess = jsonObj.TryGetProperty(fieldName, out JsonElement jsonProperty);
+                bool isSuccess = jsonRoot.TryGetProperty(fieldName, out JsonElement jsonProperty);
                 if (isSuccess)
                 {
                     jsonValue = jsonProperty.GetValue(type);
@@ -204,10 +198,9 @@ namespace Microsoft.AspNetCore.Mvc
                 case JsonValueKind.Array:
 
                     //临时实现
-                    Type elementType = null;
                     if (conversion.IsArray)
                     {
-                        elementType = conversion.GetElementType();
+                        var elementType = conversion.GetElementType();
                         Array arr = Array.CreateInstance(elementType, property.GetArrayLength());
                         var index = 0;
                         foreach (var item in property.EnumerateArray())
@@ -220,7 +213,7 @@ namespace Microsoft.AspNetCore.Mvc
                     {
                         if (typeof(IEnumerable).IsAssignableFrom(conversion))
                         {
-                            elementType = conversion.GetGenericArguments()?.FirstOrDefault();
+                            var elementType = conversion.GetGenericArguments()?.FirstOrDefault();
                             var list = (IList)Activator.CreateInstance(typeof(List<>).MakeGenericType(elementType));
                             foreach (var item in property.EnumerateArray())
                                 list.Add(item.GetValue(elementType));
