@@ -6,6 +6,13 @@ A Library For ASP.Net Core MVC and ASP.Net Core WebAPI,Binding Parameter of Acti
 
 提供直接 ASP.Net Core MVC / ASP.Net Core WebAPI将Json数据绑定到Action参数中的库
 
+支持:
+- [x] Array/List 数组
+- [x] Object 对象
+- [x] Enum 枚举
+- [x] Number 数字
+- [x] String 字符串
+
 ## 安装
 
 ```

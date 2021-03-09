@@ -43,5 +43,39 @@ namespace FromJson.Tests
             Assert.Pass();
         }
 
+        [Test]
+        public void Enum()
+        {
+            var server = GetTestServer();
+            
+            using (var client = server.CreateClient())
+            {
+                var res = client.PostAsync($"/{ControllerName}/{nameof(NumberController.PostEnum)}", ParseJsonContent(new
+                {
+                    type = 1
+                })).Result;
+
+                Assert.AreEqual("SqlServer", res.Content.ReadAsStringAsync().Result);
+            }
+            Assert.Pass();
+        }
+
+        [Test]
+        public void EmptyEnum()
+        {
+            var server = GetTestServer();
+
+            using (var client = server.CreateClient())
+            {
+                var res = client.PostAsync($"/{ControllerName}/{nameof(NumberController.PostEnum)}", ParseJsonContent(new
+                {
+                    type = -11
+                })).Result;
+
+                Assert.AreEqual("", res.Content.ReadAsStringAsync().Result);
+            }
+            Assert.Pass();
+        }
+
     }
 }

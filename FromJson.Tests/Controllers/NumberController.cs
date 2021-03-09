@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FromJson.Tests.Models;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -21,6 +22,10 @@ namespace FromJson.Tests.Controllers
             return number + 10;
         }
 
-
+        [HttpPost]
+        public string PostEnum([FromJson]TestEnum type)
+        {
+            return Enum.GetName(typeof(TestEnum), type);
+        }
     }
 }
