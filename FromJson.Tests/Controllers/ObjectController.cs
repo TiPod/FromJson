@@ -20,5 +20,14 @@ namespace FromJson.Tests.Controllers
             return true;
         }
 
+        public bool BindModel([FromJson] TestModel model, TestModel model1)
+        {
+            if (string.IsNullOrEmpty(model.Text) || string.IsNullOrEmpty(model1.Text))
+            {
+                return false;
+            }
+            return true;
+        }
+
     }
 }
