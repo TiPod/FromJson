@@ -77,7 +77,7 @@ namespace FromJson
             {
                 fieldName = fromJsonAttr.PropertyName;
             }
-            if (parseJsonValue(jsonRoot, fieldName, bindingContext.ModelType, fromJsonAttr.PropertyNameCaseInsensitive, out object jsonValue))
+            if (parseJsonValue(jsonRoot, fieldName, bindingContext.ModelType, fromJsonAttr.IgnoreCase, out object jsonValue))
             {
                 bindingContext.Result = ModelBindingResult.Success(jsonValue);
             }
@@ -106,7 +106,7 @@ namespace FromJson
             }
             else
             {
-                bool isSuccess = jsonRoot.TryGetProperty(fieldName, out JsonElement jsonProperty);
+                bool isSuccess = jsonRoot.TryGetProperty(fieldName,ignoreCase, out JsonElement jsonProperty);
                 if (isSuccess)
                 {
                     jsonValue = jsonProperty.GetValue(type);

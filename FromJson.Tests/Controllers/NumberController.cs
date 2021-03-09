@@ -7,18 +7,18 @@ namespace FromJson.Tests.Controllers
 {
     [ApiController]
     [Route("[controller]/[action]")]
-    public class DatetimeController: ControllerBase
+    public class NumberController: ControllerBase
     {
         [HttpPost]
-        public string Date([FromJson]DateTime? date)
+        public int AddTen([FromJson]int number)
         {
-            return date.Value.ToString("yyyy-MM-dd");
+            return number+10;
         }
 
         [HttpPost]
-        public string Datetime([FromJson] DateTime? date)
+        public decimal AddTenDecimal([FromJson] decimal number)
         {
-            return date.Value.ToString("yyyy-MM-dd HH:mm:ss");
+            return number + 10;
         }
 
 

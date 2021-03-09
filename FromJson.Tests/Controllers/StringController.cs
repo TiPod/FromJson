@@ -22,5 +22,12 @@ namespace FromJson.Tests.Controllers
         }
 
 
+        [HttpPost]
+        public string PostStringInUpperArgument([FromJson(ignoreCase:true)] string Text)
+        {
+            return Text;
+        }
+
+
     }
 }

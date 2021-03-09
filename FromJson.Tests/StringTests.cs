@@ -15,11 +15,7 @@ namespace FromJson.Tests
     public class StringTests: Server
     {
         string ControllerName = "String";
-        [SetUp]
-        public void Setup()
-        {
-            
-        }
+
 
         [Test]
         public void PostStringInArgument()
@@ -32,7 +28,23 @@ namespace FromJson.Tests
                 {
                     text = text
                 })).Result;
-                Assert.AreEqual(res.Content.ReadAsStringAsync().Result, text);
+                Assert.AreEqual(text,res.Content.ReadAsStringAsync().Result);
+            }
+            Assert.Pass();
+        }
+
+        [Test]
+        public void PostStringInUpperArgument()
+        {
+            var server = GetTestServer();
+            string text = "test Text Content";
+            using (var client = server.CreateClient())
+            {
+                var res = client.PostAsync($"/{ControllerName}/{nameof(StringController.PostStringInUpperArgument)}", ParseJsonContent(new
+                {
+                    text = text
+                })).Result;
+                Assert.AreEqual(text,res.Content.ReadAsStringAsync().Result);
             }
             Assert.Pass();
         }
@@ -48,7 +60,7 @@ namespace FromJson.Tests
                 {
                     text = text
                 })).Result;
-                Assert.AreEqual(res.Content.ReadAsStringAsync().Result, text);
+                Assert.AreEqual(text,res.Content.ReadAsStringAsync().Result);
             }
             Assert.Pass();
         }

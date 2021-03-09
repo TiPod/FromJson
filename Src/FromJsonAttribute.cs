@@ -21,13 +21,13 @@ namespace Microsoft.AspNetCore.Mvc
     {
         public string PropertyName { get; private set; }
 
-        public bool PropertyNameCaseInsensitive { get; private set; }
+        public bool IgnoreCase { get; private set; }
 
 
-        public FromJsonAttribute(string propertyName = null, bool propertyNameCaseInsensitive = false) : base(typeof(FromJsonModelBinder))
+        public FromJsonAttribute(string propertyName = null, bool ignoreCase = false) : base(typeof(FromJsonModelBinder))
         {
             this.PropertyName = propertyName;
-            this.PropertyNameCaseInsensitive = propertyNameCaseInsensitive;
+            this.IgnoreCase = ignoreCase;
         }
 
         private BindingSource _bindingSource = BindingSource.Custom;
