@@ -10,6 +10,7 @@ using System.Linq;
 using System.Net.Mime;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Microsoft.AspNetCore.Mvc
@@ -177,6 +178,25 @@ namespace Microsoft.AspNetCore.Mvc
     public static class JsonElementExtensions
     {
 
+        class DateTimeConverterUsingDateTimeParseAsFallback : JsonConverter<DateTime>
+        {
+            public override DateTime Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                if (!reader.TryGetDateTime(out DateTime value))
+                {
+                    value = DateTime.Parse(reader.GetString());
+                }
+
+                return value;
+            }
+
+            public override void Write(Utf8JsonWriter writer, DateTime value, JsonSerializerOptions options)
+            {
+                writer.WriteStringValue(value.ToString());
+            }
+        }
+
+
         public static object GetValue(this JsonElement property, Type conversion)
         {
             switch (property.ValueKind)
@@ -218,7 +238,9 @@ namespace Microsoft.AspNetCore.Mvc
                 case JsonValueKind.Number:
                     return changeType(property.GetDecimal(), conversion);
                 case JsonValueKind.Object:
-                    return JsonSerializer.Deserialize(property.ToString(), conversion); ;
+                    JsonSerializerOptions options = new JsonSerializerOptions();
+                    options.Converters.Add(new DateTimeConverterUsingDateTimeParseAsFallback());
+                    return JsonSerializer.Deserialize(property.ToString(), conversion, options); ;
                 case JsonValueKind.String:
                     return changeType(property.GetString(), conversion);
                 case JsonValueKind.True:
