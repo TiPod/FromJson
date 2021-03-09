@@ -30,6 +30,24 @@ namespace FromJson.Tests
             Assert.Pass();
         }
 
-
+        [Test]
+        public void BindObjectInArgument()
+        {
+            var server = GetTestServer();
+            var model = new TestModel()
+            {
+                Text = "bbbb"
+            };
+            using (var client = server.CreateClient())
+            {
+                var res = client.PostAsync($"/{ControllerName}/{nameof(ObjectController.BindModel)}", ParseJsonContent(new
+                {
+                    model = model,
+                    Text = "aaaa"
+                })).Result;
+                Assert.AreEqual(true, bool.Parse(res.Content.ReadAsStringAsync().Result));
+            }
+            Assert.Pass();
+        }
     }
 }
