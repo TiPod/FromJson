@@ -1,6 +1,6 @@
 # FromJson
 
-> 版本要求 \>=  .net core 3.1
+> 版本要求 \>=  .NET Standard 2.0
 
 A Library For ASP.Net Core MVC and ASP.Net Core WebAPI,Binding Parameter of Action From Json Data.
 
