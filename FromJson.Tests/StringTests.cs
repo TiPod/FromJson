@@ -1,21 +1,12 @@
 using FromJson.Tests.Basic;
 using FromJson.Tests.Controllers;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
-using Newtonsoft.Json;
 using NUnit.Framework;
-using System;
-using System.Net.Http;
-using System.Text;
 
 namespace FromJson.Tests
 {
-    public class StringTests: Server
+    public class StringTests : Server
     {
-        string ControllerName = "String";
-
+        private string ControllerName = "String";
 
         [Test]
         public void PostStringInArgument()
@@ -28,7 +19,7 @@ namespace FromJson.Tests
                 {
                     text = text
                 })).Result;
-                Assert.AreEqual(text,res.Content.ReadAsStringAsync().Result);
+                Assert.AreEqual(text, res.Content.ReadAsStringAsync().Result);
             }
             Assert.Pass();
         }
@@ -44,7 +35,7 @@ namespace FromJson.Tests
                 {
                     text = text
                 })).Result;
-                Assert.AreEqual(text,res.Content.ReadAsStringAsync().Result);
+                Assert.AreEqual(text, res.Content.ReadAsStringAsync().Result);
             }
             Assert.Pass();
         }
@@ -60,14 +51,9 @@ namespace FromJson.Tests
                 {
                     text = text
                 })).Result;
-                Assert.AreEqual(text,res.Content.ReadAsStringAsync().Result);
+                Assert.AreEqual(text, res.Content.ReadAsStringAsync().Result);
             }
             Assert.Pass();
         }
-
-
-
-
-
     }
 }

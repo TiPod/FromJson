@@ -1,16 +1,11 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace FromJson.Tests.Basic
 {
-    class Startup
+    internal class Startup
     {
-
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
@@ -24,6 +19,5 @@ namespace FromJson.Tests.Basic
                 endpoints.MapControllers();
             });
         }
-
     }
 }

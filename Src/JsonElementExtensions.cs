@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -10,8 +9,7 @@ namespace FromJson
 {
     public static class JsonElementExtensions
     {
-
-        class DateTimeConverterUsingDateTimeParseAsFallback : JsonConverter<DateTime>
+        private class DateTimeConverterUsingDateTimeParseAsFallback : JsonConverter<DateTime>
         {
             public override DateTime Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
@@ -46,14 +44,10 @@ namespace FromJson
                         return true;
                     }
                 }
-
             }
 
-
             return false;
-
         }
-
 
         public static object GetValue(this JsonElement property, Type conversion)
         {
@@ -90,20 +84,26 @@ namespace FromJson
                     }
                 case JsonValueKind.False:
                     return false;
+
                 case JsonValueKind.Null:
                     return null;
+
                 case JsonValueKind.Number:
                     return changeType(property.GetDecimal(), conversion);
+
                 case JsonValueKind.Object:
                     JsonSerializerOptions options = new JsonSerializerOptions();
                     options.Converters.Add(new DateTimeConverterUsingDateTimeParseAsFallback());
                     return JsonSerializer.Deserialize(property.ToString(), conversion, options); ;
                 case JsonValueKind.String:
                     return changeType(property.GetString(), conversion);
+
                 case JsonValueKind.True:
                     return true;
+
                 case JsonValueKind.Undefined:
                     return null;
+
                 default:
                     throw new ArgumentException("Unkown property.ValueKind");
             }
@@ -137,6 +137,5 @@ namespace FromJson
 
             return Convert.ChangeType(value, t);
         }
-
     }
 }

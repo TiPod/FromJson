@@ -7,7 +7,7 @@ namespace FromJson.Tests
 {
     public class ObjectTests : Server
     {
-        string ControllerName = "Object";
+        private string ControllerName = "Object";
 
         [Test]
         public void ObjectInArgument()

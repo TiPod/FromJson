@@ -19,9 +19,9 @@ namespace FromJson
         public const string ITEM_CACHAE_KEY = "FromJson_Cache";
 
         public static readonly IDictionary<string, FromJsonAttribute> fromJsonAttrCache = new ConcurrentDictionary<string, FromJsonAttribute>();
+
         public async Task BindModelAsync(ModelBindingContext bindingContext)
         {
-
             var httpContext = bindingContext.HttpContext;
             // 不是有效的格式
             ContentType contentType = new ContentType(httpContext.Request.ContentType);
@@ -58,7 +58,6 @@ namespace FromJson
                 {
                     using (JsonDocument document = JsonDocument.Parse(bodyText))
                     {
-
                         jsonRoot = document.RootElement.Clone();
                     }
                     bindingContext.HttpContext.Items[ITEM_CACHAE_KEY] = jsonRoot;
@@ -131,8 +130,8 @@ namespace FromJson
                 request.Body.Position = 0;
                 return encoding.GetString(ms.ToArray());
             }
-
         }
+
         private FromJsonAttribute getFromJsonAttr(ModelBindingContext bindingContext, string fieldName)
         {
             var actionDesc = bindingContext.ActionContext.ActionDescriptor;
@@ -149,9 +148,5 @@ namespace FromJson
             }
             return fromJsonAttr;
         }
-
     }
-
-
-
 }

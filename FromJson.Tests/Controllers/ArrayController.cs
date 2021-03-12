@@ -1,18 +1,16 @@
 ﻿using FromJson.Tests.Models;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace FromJson.Tests.Controllers
 {
     [ApiController]
     [Route("[controller]/[action]")]
-    public class ArrayController:ControllerBase
+    public class ArrayController : ControllerBase
     {
         [HttpPost]
-        public int StringList([FromJson]List<string> idList)
+        public int StringList([FromJson] List<string> idList)
         {
             return idList.Count;
         }
@@ -28,6 +26,5 @@ namespace FromJson.Tests.Controllers
         {
             return modelList.Count;
         }
-
     }
 }

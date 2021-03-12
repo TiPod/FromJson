@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace FromJson.Tests.Models
 {
@@ -11,6 +9,7 @@ namespace FromJson.Tests.Models
         public int Status { get; set; }
         public SecondModel Detail { get; set; }
     }
+
     public class SecondModel
     {
         public string Name { get; set; }

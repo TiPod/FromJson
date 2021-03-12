@@ -5,14 +5,12 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace FromJson.Tests
 {
-    public class ArrayTests: Server
+    public class ArrayTests : Server
     {
-        string ControllerName = "Array";
-
+        private string ControllerName = "Array";
 
         [Test]
         public void PostStringInArgument()
@@ -31,11 +29,10 @@ namespace FromJson.Tests
                 {
                     idList = req
                 })).Result;
-                Assert.AreEqual( req.Count, int.Parse(res.Content.ReadAsStringAsync().Result));
+                Assert.AreEqual(req.Count, int.Parse(res.Content.ReadAsStringAsync().Result));
             }
             Assert.Pass();
         }
-
 
         [Test]
         public void PostNumberInArgument()
@@ -88,9 +85,5 @@ namespace FromJson.Tests
             }
             Assert.Pass();
         }
-
-
-
-
     }
 }

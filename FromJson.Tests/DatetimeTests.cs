@@ -2,15 +2,12 @@
 using FromJson.Tests.Controllers;
 using NUnit.Framework;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace FromJson.Tests
 {
-    public class DatetimeTests: Server
+    public class DatetimeTests : Server
     {
-        string ControllerName = "Datetime";
-
+        private string ControllerName = "Datetime";
 
         [Test]
         public void DatetimeInArgumentISO()
@@ -44,7 +41,6 @@ namespace FromJson.Tests
             Assert.Pass();
         }
 
-
         [Test]
         public void DatetimeInArgumentWithMinutes()
         {
@@ -60,11 +56,5 @@ namespace FromJson.Tests
             }
             Assert.Pass();
         }
-
-
-
-
-
-
     }
 }

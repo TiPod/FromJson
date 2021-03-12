@@ -1,16 +1,12 @@
 ﻿using FromJson.Tests.Basic;
 using FromJson.Tests.Controllers;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace FromJson.Tests
 {
-
-    public class NumberTests:Server
+    public class NumberTests : Server
     {
-        string ControllerName = "Number";
+        private string ControllerName = "Number";
 
         [Test]
         public void NumberInArgument()
@@ -23,10 +19,11 @@ namespace FromJson.Tests
                 {
                     number = number
                 })).Result;
-                Assert.AreEqual( 114514 + 10, int.Parse(res.Content.ReadAsStringAsync().Result));
+                Assert.AreEqual(114514 + 10, int.Parse(res.Content.ReadAsStringAsync().Result));
             }
             Assert.Pass();
         }
+
         [Test]
         public void NumberInArgumentDecimal()
         {
@@ -47,7 +44,7 @@ namespace FromJson.Tests
         public void Enum()
         {
             var server = GetTestServer();
-            
+
             using (var client = server.CreateClient())
             {
                 var res = client.PostAsync($"/{ControllerName}/{nameof(NumberController.PostEnum)}", ParseJsonContent(new
@@ -76,6 +73,5 @@ namespace FromJson.Tests
             }
             Assert.Pass();
         }
-
     }
 }

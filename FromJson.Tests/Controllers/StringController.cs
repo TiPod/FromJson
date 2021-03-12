@@ -1,16 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace FromJson.Tests.Controllers
 {
     [ApiController]
     [Route("[controller]/[action]")]
-    public class StringController:ControllerBase
+    public class StringController : ControllerBase
     {
         [HttpPost]
-        public string PostStringInArgument([FromJson]string text)
+        public string PostStringInArgument([FromJson] string text)
         {
             return text;
         }
@@ -21,14 +18,10 @@ namespace FromJson.Tests.Controllers
             return text;
         }
 
-
         [HttpPost]
-        public string PostStringInUpperArgument([FromJson(ignoreCase:true)] string Text)
+        public string PostStringInUpperArgument([FromJson(ignoreCase: true)] string Text)
         {
             return Text;
         }
-
-
-
     }
 }

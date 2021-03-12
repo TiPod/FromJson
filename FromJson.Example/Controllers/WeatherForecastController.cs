@@ -4,7 +4,6 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace FromJson.Example.Controllers
 {
@@ -39,9 +38,9 @@ namespace FromJson.Example.Controllers
 
         [HttpPost]
         public FullModel Post(
-            [FromJson]int id,
-            [FromJson]string title,
-            [FromJson]ContentModel content)
+            [FromJson] int id,
+            [FromJson] string title,
+            [FromJson] ContentModel content)
         {
             return new FullModel()
             {
@@ -50,6 +49,5 @@ namespace FromJson.Example.Controllers
                 Content = content
             };
         }
-
     }
 }

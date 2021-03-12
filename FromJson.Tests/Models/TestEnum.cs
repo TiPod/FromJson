@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace FromJson.Tests.Models
+﻿namespace FromJson.Tests.Models
 {
     public enum TestEnum
     {

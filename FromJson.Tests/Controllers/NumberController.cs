@@ -1,19 +1,17 @@
 ﻿using FromJson.Tests.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace FromJson.Tests.Controllers
 {
     [ApiController]
     [Route("[controller]/[action]")]
-    public class NumberController: ControllerBase
+    public class NumberController : ControllerBase
     {
         [HttpPost]
-        public int AddTen([FromJson]int number)
+        public int AddTen([FromJson] int number)
         {
-            return number+10;
+            return number + 10;
         }
 
         [HttpPost]
@@ -23,7 +21,7 @@ namespace FromJson.Tests.Controllers
         }
 
         [HttpPost]
-        public string PostEnum([FromJson]TestEnum type)
+        public string PostEnum([FromJson] TestEnum type)
         {
             return Enum.GetName(typeof(TestEnum), type);
         }
