@@ -7,7 +7,7 @@ namespace FromJson.Tests
 {
     public class DatetimeTests : Server
     {
-        private string ControllerName = "Datetime";
+        private readonly string ControllerName = "Datetime";
 
         [Test]
         public void DatetimeInArgumentISO()
@@ -18,7 +18,7 @@ namespace FromJson.Tests
             {
                 var res = client.PostAsync($"/{ControllerName}/{nameof(DatetimeController.Date)}", ParseJsonContent(new
                 {
-                    date = date
+                    date
                 })).Result;
                 Assert.AreEqual(DateTime.Now.ToString("yyyy-MM-dd"), res.Content.ReadAsStringAsync().Result);
             }
@@ -34,7 +34,7 @@ namespace FromJson.Tests
             {
                 var res = client.PostAsync($"/{ControllerName}/{nameof(DatetimeController.Date)}", ParseJsonContent(new
                 {
-                    date = date
+                    date
                 })).Result;
                 Assert.AreEqual(date, res.Content.ReadAsStringAsync().Result);
             }
@@ -45,12 +45,12 @@ namespace FromJson.Tests
         public void DatetimeInArgumentWithMinutes()
         {
             var server = GetTestServer();
-            string date = "2021-03-09 12:01:20";
+            string date = "2021-03-09T12:01:20";
             using (var client = server.CreateClient())
             {
                 var res = client.PostAsync($"/{ControllerName}/{nameof(DatetimeController.Datetime)}", ParseJsonContent(new
                 {
-                    date = date
+                    date
                 })).Result;
                 Assert.AreEqual(date, res.Content.ReadAsStringAsync().Result);
             }

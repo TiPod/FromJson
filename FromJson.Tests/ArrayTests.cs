@@ -1,7 +1,9 @@
 ﻿using FromJson.Tests.Basic;
 using FromJson.Tests.Controllers;
 using FromJson.Tests.Models;
+
 using NUnit.Framework;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +12,7 @@ namespace FromJson.Tests
 {
     public class ArrayTests : Server
     {
-        private string ControllerName = "Array";
+        private readonly string ControllerName = "Array";
 
         [Test]
         public void PostStringInArgument()
@@ -64,13 +66,13 @@ namespace FromJson.Tests
             {
                 new TestModel()
                 {
-                    CreateAt = DateTime.Now,
+                    CreateAt =DateTime.Now,
                     Status = 2,
                     Text = "23333"
                 },
                 new TestModel()
                 {
-                    CreateAt = DateTime.Now,
+                    CreateAt =DateTime.Now,
                     Status = 2,
                     Text = "23333"
                 }

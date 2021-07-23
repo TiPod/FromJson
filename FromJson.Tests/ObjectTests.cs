@@ -7,7 +7,7 @@ namespace FromJson.Tests
 {
     public class ObjectTests : Server
     {
-        private string ControllerName = "Object";
+        private readonly string ControllerName = "Object";
 
         [Test]
         public void ObjectInArgument()
@@ -25,7 +25,7 @@ namespace FromJson.Tests
             {
                 var res = client.PostAsync($"/{ControllerName}/{nameof(ObjectController.CheckObj)}", ParseJsonContent(new
                 {
-                    model = model
+                    model
                 })).Result;
                 Assert.AreEqual(true, bool.Parse(res.Content.ReadAsStringAsync().Result));
             }
@@ -44,7 +44,7 @@ namespace FromJson.Tests
             {
                 var res = client.PostAsync($"/{ControllerName}/{nameof(ObjectController.BindModel)}", ParseJsonContent(new
                 {
-                    model = model,
+                    model,
                     Text = "aaaa"
                 })).Result;
                 Assert.AreEqual(true, bool.Parse(res.Content.ReadAsStringAsync().Result));

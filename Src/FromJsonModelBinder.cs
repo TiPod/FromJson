@@ -24,8 +24,7 @@ namespace FromJson
         {
             var httpContext = bindingContext.HttpContext;
             // 不是有效的格式
-            ContentType contentType = new ContentType(httpContext.Request.ContentType);
-            if (string.Compare(contentType.MediaType, "application/json", true) != 0)
+            if (string.Compare(new ContentType(httpContext.Request.ContentType).MediaType, "application/json", true) != 0)
             {
                 throw new ApplicationException("ContentType of request should be application/json");
             }
@@ -35,7 +34,7 @@ namespace FromJson
             if (itemValue == null)
             {
                 //设置编码
-                var charSet = contentType.CharSet;
+                var charSet = new ContentType(httpContext.Request.ContentType).CharSet;
                 Encoding encoding;
                 if (string.IsNullOrWhiteSpace(charSet))
                 {
@@ -121,7 +120,7 @@ namespace FromJson
             }
         }
 
-        private async Task<string> getBodyAsync(HttpRequest request, Encoding encoding)
+        private  static async Task<string> getBodyAsync(HttpRequest request, Encoding encoding)
         {
             using (var ms = new MemoryStream())
             {
@@ -132,14 +131,13 @@ namespace FromJson
             }
         }
 
-        private FromJsonAttribute getFromJsonAttr(ModelBindingContext bindingContext, string fieldName)
+        private static FromJsonAttribute getFromJsonAttr(ModelBindingContext bindingContext, string fieldName)
         {
             var actionDesc = bindingContext.ActionContext.ActionDescriptor;
             string actionId = actionDesc.Id;
             string cacheKey = $"{actionId}:{fieldName}";
 
-            FromJsonAttribute fromJsonAttr;
-            if (!fromJsonAttrCache.TryGetValue(cacheKey, out fromJsonAttr))
+            if (!fromJsonAttrCache.TryGetValue(cacheKey, out FromJsonAttribute fromJsonAttr))
             {
                 var ctrlActionDesc = bindingContext.ActionContext.ActionDescriptor as ControllerActionDescriptor;
                 var fieldParameter = ctrlActionDesc.MethodInfo.GetParameters().Single(p => p.Name == fieldName);

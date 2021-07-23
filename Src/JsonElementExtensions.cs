@@ -13,9 +13,10 @@ namespace FromJson
         {
             public override DateTime Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
+                // 反正日期转化失败
                 if (!reader.TryGetDateTime(out DateTime value))
                 {
-                    value = DateTime.Parse(reader.GetString());
+                    //value = DateTime.Parse(reader.GetString());
                 }
 
                 return value;
@@ -23,7 +24,7 @@ namespace FromJson
 
             public override void Write(Utf8JsonWriter writer, DateTime value, JsonSerializerOptions options)
             {
-                writer.WriteStringValue(value.ToString());
+                writer.WriteStringValue(value.ToString("yyyy-MM-dd HH:mm:ss"));
             }
         }
 
@@ -92,9 +93,9 @@ namespace FromJson
                     return changeType(property.GetDecimal(), conversion);
 
                 case JsonValueKind.Object:
-                    JsonSerializerOptions options = new JsonSerializerOptions();
-                    options.Converters.Add(new DateTimeConverterUsingDateTimeParseAsFallback());
-                    return JsonSerializer.Deserialize(property.ToString(), conversion, options); ;
+                    var ooptions = new JsonSerializerOptions();
+                    ooptions.Converters.Add(new DateTimeConverterUsingDateTimeParseAsFallback());
+                    return JsonSerializer.Deserialize(property.ToString(), conversion, ooptions);
                 case JsonValueKind.String:
                     return changeType(property.GetString(), conversion);
 

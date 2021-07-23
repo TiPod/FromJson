@@ -6,7 +6,7 @@ namespace FromJson.Tests
 {
     public class NumberTests : Server
     {
-        private string ControllerName = "Number";
+        private readonly string ControllerName = "Number";
 
         [Test]
         public void NumberInArgument()
@@ -17,7 +17,7 @@ namespace FromJson.Tests
             {
                 var res = client.PostAsync($"/{ControllerName}/{nameof(NumberController.AddTen)}", ParseJsonContent(new
                 {
-                    number = number
+                    number
                 })).Result;
                 Assert.AreEqual(114514 + 10, int.Parse(res.Content.ReadAsStringAsync().Result));
             }
@@ -33,7 +33,7 @@ namespace FromJson.Tests
             {
                 var res = client.PostAsync($"/{ControllerName}/{nameof(NumberController.AddTenDecimal)}", ParseJsonContent(new
                 {
-                    number = number
+                    number
                 })).Result;
                 Assert.AreEqual(11451400000 + 10, decimal.Parse(res.Content.ReadAsStringAsync().Result));
             }
